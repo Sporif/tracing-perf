@@ -1,0 +1,19 @@
+[package]
+name = "tracing-perf"
+version = "0.1.0"
+authors = ["Sporif <sporif@posteo.net>"]
+description = "Performance and time reporting for tracing"
+keywords = ["tracing", "logging", "log", "term"]
+
+license = "MIT OR Apache-2.0"
+edition = "2021"
+include = ["src/**", "LICENSE-*"]
+
+documentation = "https://docs.rs/tracing-perf"
+homepage = "https://github.com/Sporif/tracing-perf"
+repository = "https://github.com/Sporif/tracing-perf"
+readme = "README.md"
+
+[dependencies]
+minstant = { version = "0.1", optional = true }
+tracing = "0.1"
