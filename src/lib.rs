@@ -58,7 +58,7 @@ impl TimeReporter {
         }
     }
 
-    /// Create new `TimeReporter`
+    /// Create new `TimeReporter` with a specified level
     pub fn new_with_level<S: Into<String>>(name: S, level: Level) -> TimeReporter {
         TimeReporter {
             times: HashMap::new(),
@@ -70,9 +70,9 @@ impl TimeReporter {
 
     /// Start counting time for a state named "key"
     ///
-    /// If this the `TimeReporter` was already counting time
+    /// If this `TimeReporter` was already counting time
     /// for another state, it will end counting time for it
-    /// before starting new one.
+    /// before starting a new one.
     pub fn start(&mut self, key: &'static str) {
         let now = Instant::now();
 
@@ -84,7 +84,7 @@ impl TimeReporter {
     /// Start counting time and execute a function `f`
     ///
     /// This is handy syntax for `if let` or `while let` expressions
-    /// where it would be inconvenient to add standalone `start` call.
+    /// where it would be inconvenient to add a standalone `start` call.
     pub fn start_with<F, R>(&mut self, key: &'static str, f: F) -> R
     where
         F: FnOnce() -> R,
