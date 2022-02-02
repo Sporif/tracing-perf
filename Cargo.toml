@@ -7,7 +7,6 @@ keywords = ["tracing", "logging", "log", "term"]
 
 license = "MIT OR Apache-2.0"
 edition = "2021"
-include = ["src/**", "LICENSE-*"]
 
 documentation = "https://docs.rs/tracing-perf"
 homepage = "https://github.com/Sporif/tracing-perf"
@@ -16,4 +15,4 @@ readme = "README.md"
 
 [dependencies]
 minstant = { version = "0.1", optional = true }
-tracing = "0.1"
+tracing = { version = "0.1", default-features = false }
