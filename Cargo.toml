@@ -1,14 +1,12 @@
 [package]
 name = "tracing-perf"
 version = "0.1.0"
-authors = ["Sporif <sporif@posteo.net>"]
+authors = ["Amine Hassane <sporif@posteo.net>"]
 description = "Performance and time reporting for tracing"
 keywords = ["tracing", "logging", "log", "term"]
 categories = ["development-tools::profiling"]
-
 license = "MIT OR Apache-2.0"
 edition = "2021"
-
 repository = "https://github.com/Sporif/tracing-perf"
 readme = "README.md"
 
