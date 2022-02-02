@@ -7,7 +7,19 @@ use time::Instant;
 
 #[cfg(feature = "minstant")]
 use minstant::Instant;
-use tracing::{span, Level};
+use tracing::Level;
+
+macro_rules! span {
+    ($lvl:expr, $($args:tt)*) => {{
+        match $lvl {
+            Level::ERROR => ::tracing::span!(Level::ERROR, $($args)*),
+            Level::WARN => ::tracing::span!(Level::WARN, $($args)*),
+            Level::INFO => ::tracing::span!(Level::INFO, $($args)*),
+            Level::DEBUG => ::tracing::span!(Level::DEBUG, $($args)*),
+            Level::TRACE => ::tracing::span!(Level::TRACE, $($args)*),
+        }
+    }};
+}
 
 macro_rules! event {
     (target: $target:expr, $lvl:expr, $($args:tt)*) => {{
@@ -122,7 +134,7 @@ impl<'a> fmt::Display for TimeReporter {
 
 impl Drop for TimeReporter {
     fn drop(&mut self) {
-        let _span = span!(Level::INFO, "time-report").entered();
+        let _span = span!(self.level, "time-report").entered();
         event!(target: "tracing-perf", self.level, "{}", self)
     }
 }
