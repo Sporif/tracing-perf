@@ -33,7 +33,7 @@ macro_rules! event {
     }};
 }
 
-/// Collect and report total time spent on set of activities
+/// Collect and report total time spent on set of activities.
 ///
 /// `TimeReporter` is useful for generating and reporting
 /// time reports: how much time was spend on a given activity.
@@ -49,9 +49,9 @@ pub struct TimeReporter {
 }
 
 impl TimeReporter {
-    /// Create new `TimeReporter`
-    pub fn new<S: Into<String>>(name: S) -> TimeReporter {
-        TimeReporter {
+    /// Create new `TimeReporter`.
+    pub fn new<S: Into<String>>(name: S) -> Self {
+        Self {
             times: HashMap::new(),
             name: name.into(),
             cur_state_time: None,
@@ -59,9 +59,9 @@ impl TimeReporter {
         }
     }
 
-    /// Create new `TimeReporter` with a specified level
-    pub fn new_with_level<S: Into<String>>(name: S, level: Level) -> TimeReporter {
-        TimeReporter {
+    /// Create new `TimeReporter` with a specified level.
+    pub fn new_with_level<S: Into<String>>(name: S, level: Level) -> Self {
+        Self {
             times: HashMap::new(),
             name: name.into(),
             cur_state_time: None,
@@ -69,7 +69,7 @@ impl TimeReporter {
         }
     }
 
-    /// Start counting time for a state named "key"
+    /// Start counting time for a state named "key".
     ///
     /// If this `TimeReporter` was already counting time
     /// for another state, it will end counting time for it
@@ -82,7 +82,7 @@ impl TimeReporter {
         self.cur_state_time = Some((key, now))
     }
 
-    /// Start counting time and execute a function `f`
+    /// Start counting time and execute a function `f`.
     ///
     /// This is handy syntax for `if let` or `while let` expressions
     /// where it would be inconvenient to add a standalone `start` call.
@@ -104,12 +104,13 @@ impl TimeReporter {
         }
     }
 
+    /// Stop counting time.
     pub fn stop(&mut self) {
         let now = Instant::now();
         self.save_current(now);
     }
 
-    /// Finish counting time and report results
+    /// Finish counting time and report results.
     pub fn finish(self) {}
 }
 
