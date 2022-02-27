@@ -40,6 +40,7 @@ macro_rules! event {
 ///
 /// On `drop` or on call to `finish` it will report total times
 /// gathered as a `tracing` event.
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct TimeReporter {
     times: HashMap<&'static str, time::Duration>,
     cur_state_time: Option<(&'static str, Instant)>,
