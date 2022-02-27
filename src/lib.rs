@@ -1,12 +1,16 @@
 //! This crate provides very useful tools for reporting performance metrics
 //! through `tracing`.
 
-use std::{collections::HashMap, fmt, time};
-#[cfg(not(feature = "minstant"))]
-use time::Instant;
+#![forbid(unsafe_code)]
+#![warn(clippy::all, clippy::pedantic, clippy::nursery, clippy::cargo)]
 
+use std::{collections::HashMap, fmt};
+
+#[cfg(not(feature = "minstant"))]
+use std::time::{Duration, Instant};
 #[cfg(feature = "minstant")]
-use minstant::Instant;
+use ::{minstant::Instant, std::time::Duration};
+
 use tracing::Level;
 
 macro_rules! span {
@@ -42,7 +46,7 @@ macro_rules! event {
 /// gathered as a `tracing` event.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct TimeReporter {
-    times: HashMap<&'static str, time::Duration>,
+    times: HashMap<&'static str, Duration>,
     cur_state_time: Option<(&'static str, Instant)>,
     name: String,
     level: Level,
@@ -79,7 +83,7 @@ impl TimeReporter {
 
         self.save_current(now);
 
-        self.cur_state_time = Some((key, now))
+        self.cur_state_time = Some((key, now));
     }
 
     /// Start counting time and execute a function `f`.
@@ -97,10 +101,7 @@ impl TimeReporter {
 
     fn save_current(&mut self, now: Instant) {
         if let Some((key, prev)) = self.cur_state_time.take() {
-            *self
-                .times
-                .entry(key)
-                .or_insert_with(|| time::Duration::new(0, 0)) += now - prev;
+            *self.times.entry(key).or_insert_with(|| Duration::new(0, 0)) += now - prev;
         }
     }
 
@@ -111,12 +112,14 @@ impl TimeReporter {
     }
 
     /// Finish counting time and report results.
+    #[allow(clippy::unused_self)]
     pub fn finish(self) {}
 }
 
 impl<'a> fmt::Display for TimeReporter {
+    #[allow(clippy::cast_precision_loss, clippy::cast_lossless)]
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let mut stats: Vec<(&'static str, time::Duration)> =
+        let mut stats: Vec<(&'static str, Duration)> =
             self.times.iter().map(|(&k, &v)| (k, v)).collect();
         stats.sort_by_key(|s| s.1);
 
@@ -126,7 +129,7 @@ impl<'a> fmt::Display for TimeReporter {
                 f,
                 ", {}: {}",
                 state,
-                dur.as_secs() as f64 + dur.subsec_nanos() as f64 / 1000000000f64
+                dur.as_secs() as f64 + dur.subsec_nanos() as f64 / 1_000_000_000_f64
             )?;
         }
 
@@ -137,6 +140,6 @@ impl<'a> fmt::Display for TimeReporter {
 impl Drop for TimeReporter {
     fn drop(&mut self) {
         let _span = span!(self.level, "time-report").entered();
-        event!(target: "tracing-perf", self.level, "{}", self)
+        event!(target: "tracing-perf", self.level, "{}", self);
     }
 }
