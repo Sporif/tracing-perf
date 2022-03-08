@@ -10,6 +10,28 @@ edition = "2021"
 repository = "https://github.com/Sporif/tracing-perf"
 readme = "README.md"
 
+# docs.rs-specific configuration
+[package.metadata.docs.rs]
+all-features = true
+# defines the configuration attribute `docsrs`
+rustdoc-args = ["--cfg", "docsrs"]
+
+[features]
+default = ["start-print-order"]
+## Feature flags
+
+## The start-print-order feature enables printing total times by start order.
+start-print-order = ["indexmap"]
+
+## Enable to use [`minstant`](https://docs.rs/minstant/latest/minstant/) as a faster drop-in replacement for std::time::Instant.
+minstant = ["minstant-crate"]
+
+docsrs = ["document-features"]
+
 [dependencies]
-minstant = { version = "0.1", optional = true }
+cfg-if = "1.0"
+document-features = { version = "0.2", optional = true }
+indexmap = { version = "1.8", optional = true }
 tracing = { version = "0.1", default-features = false }
+
+minstant-crate = { version = "0.1", package = "minstant", optional = true }
