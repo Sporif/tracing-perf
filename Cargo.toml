@@ -18,7 +18,6 @@ rustdoc-args = ["--cfg", "docsrs"]
 
 [features]
 default = ["start-print-order"]
-## Feature flags
 
 ## The start-print-order feature enables printing total times by start order.
 start-print-order = ["indexmap"]
