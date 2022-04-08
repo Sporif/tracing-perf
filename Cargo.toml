@@ -1,6 +1,6 @@
 [package]
 name = "tracing-perf"
-version = "0.2.1"
+version = "0.2.2"
 authors = ["Amine Hassane <sporif@posteo.net>"]
 description = "Performance and time reporting for tracing"
 keywords = ["tracing", "logging", "log", "term"]
