@@ -23,7 +23,7 @@ default = ["start-print-order"]
 start-print-order = ["indexmap"]
 
 ## Enable to use [`minstant`](https://docs.rs/minstant/latest/minstant/) as a faster drop-in replacement for std::time::Instant.
-minstant = ["minstant-crate"]
+minstant = ["dep:minstant"]
 
 docsrs = ["document-features"]
 
@@ -33,4 +33,4 @@ document-features = { version = "0.2", optional = true }
 indexmap = { version = "1.8", optional = true }
 tracing = { version = "0.1", default-features = false }
 
-minstant-crate = { version = "0.1", package = "minstant", optional = true }
+minstant = { version = "0.1", optional = true }

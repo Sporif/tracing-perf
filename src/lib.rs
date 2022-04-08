@@ -17,7 +17,7 @@ use std::collections::HashMap;
 #[cfg(not(feature = "minstant"))]
 use std::time::{Duration, Instant};
 #[cfg(feature = "minstant")]
-use ::{minstant_crate::Instant, std::time::Duration};
+use ::{minstant::Instant, std::time::Duration};
 
 use tracing::Level;
 
